@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "new_test": "Neuer Test",
+    "history": "Verlauf",
+    "logout": "Abmelden",
+    "language": "Sprache"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "username": "Benutzername",
+    "password": "Passwort",
+    "email": "E-Mail-Adresse",
+    "login_button": "Anmelden",
+    "register_button": "Konto erstellen",
+    "already_member": "Bereits Mitglied?",
+    "new_member": "Neu bei ASD-Vorhersage?"
+  },
+  "form": {
+    "age": "Alter",
+    "gender": "Geschlecht",
+    "ethnicity": "Ethnizität",
+    "relation": "Beziehung zum Subjekt",
+    "submit": "Absenden",
+    "cancel": "Abbrechen",
+    "jaundice": "Ikterus-Vorgeschichte",
+    "used_app": "App zuvor verwendet",
+    "next": "Weiter",
+    "previous": "Zurück"
+  },
+  "messages": {
+    "welcome": "Willkommen bei ASD-Vorhersage",
+    "login_success": "Anmeldung erfolgreich!",
+    "logout_success": "Sie wurden abgemeldet.",
+    "error": "Ein Fehler ist aufgetreten",
+    "no_data": "Keine Daten verfügbar",
+    "loading": "Wird geladen...",
+    "success": "Erfolg"
+  },
+  "result": {
+    "score": "Risikoscore",
+    "prediction": "Vorhersage",
+    "confidence": "Konfidenz",
+    "high_risk": "Hohes Risiko",
+    "low_risk": "Niedriges Risiko",
+    "moderate_risk": "Moderates Risiko",
+    "probability": "Wahrscheinlichkeit",
+    "interpretation": "Interpretation",
+    "recommendation": "Empfehlung"
+  },
+  "settings": {
+    "language": "Sprache",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "preferences": "Einstellungen",
+    "language_changed": "Sprache erfolgreich geändert"
+  },
+  "home": {
+    "title": "ASD-Vorhersage-Tool",
+    "subtitle": "Screening für Autismus-Spektrum-Störung",
+    "description": "Ein umfassendes Tool zur Identifizierung einer möglichen Autismus-Spektrum-Störung",
+    "get_started": "Erste Schritte",
+    "features": "Funktionen",
+    "about": "Über",
+    "contact": "Kontakt"
+  },
+  "questionnaire": {
+    "title": "ASD-Screening-Fragebogen",
+    "instructions": "Bitte beantworten Sie alle Fragen ehrlich",
+    "question": "Frage",
+    "of": "von",
+    "yes": "Ja",
+    "no": "Nein",
+    "next_question": "Nächste Frage",
+    "previous_question": "Vorherige Frage",
+    "submit_test": "Test absenden"
+  },
+  "history": {
+    "title": "Ihr Testverlauf",
+    "description": "Zeigen Sie alle bisherigen ASD-Screening-Tests an",
+    "total_tests": "Gesamttests",
+    "average_score": "Durchschnittliche Punktzahl",
+    "high_risk_count": "Tests mit hohem Risiko",
+    "date": "Datum",
+    "score": "Ergebnis",
+    "status": "Status",
+    "action": "Aktion",
+    "view": "Ansicht",
+    "export_data": "Daten exportieren",
+    "export_analytics": "Analyse exportieren",
+    "export_features": "Funktionen exportieren"
+  },
+  "features": {
+    "confidence": "Konfidenzintervalle",
+    "shap": "Funktionszuschreibung",
+    "ab_test": "A/B-Test",
+    "calibration": "Modellkalibrierung",
+    "retraining": "Automatisches Umtraining",
+    "export": "Datenexport"
+  }
+}

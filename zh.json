@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "home": "首页",
+    "new_test": "新测试",
+    "history": "历史记录",
+    "logout": "登出",
+    "language": "语言"
+  },
+  "auth": {
+    "login": "登录",
+    "register": "注册",
+    "username": "用户名",
+    "password": "密码",
+    "email": "电子邮件地址",
+    "login_button": "登录",
+    "register_button": "创建账户",
+    "already_member": "已是会员？",
+    "new_member": "新用户？"
+  },
+  "form": {
+    "age": "年龄",
+    "gender": "性别",
+    "ethnicity": "种族",
+    "relation": "与受试者的关系",
+    "submit": "提交",
+    "cancel": "取消",
+    "jaundice": "黄疸病史",
+    "used_app": "之前使用过筛查应用",
+    "next": "下一步",
+    "previous": "上一步"
+  },
+  "messages": {
+    "welcome": "欢迎使用自闭症谱系预测",
+    "login_success": "登录成功！",
+    "logout_success": "您已登出。",
+    "error": "发生错误",
+    "no_data": "无可用数据",
+    "loading": "加载中...",
+    "success": "成功"
+  },
+  "result": {
+    "score": "风险评分",
+    "prediction": "预测",
+    "confidence": "置信度",
+    "high_risk": "高风险",
+    "low_risk": "低风险",
+    "moderate_risk": "中等风险",
+    "probability": "概率",
+    "interpretation": "解释",
+    "recommendation": "建议"
+  },
+  "settings": {
+    "language": "语言",
+    "save": "保存",
+    "cancel": "取消",
+    "preferences": "偏好设置",
+    "language_changed": "语言更改成功"
+  },
+  "home": {
+    "title": "自闭症谱系预测工具",
+    "subtitle": "自闭症谱系障碍筛查",
+    "description": "一个全面的工具，帮助识别潜在的自闭症谱系障碍",
+    "get_started": "开始",
+    "features": "功能",
+    "about": "关于",
+    "contact": "联系"
+  },
+  "questionnaire": {
+    "title": "自闭症谱系筛查问卷",
+    "instructions": "请诚实回答所有问题",
+    "question": "问题",
+    "of": "共",
+    "yes": "是",
+    "no": "否",
+    "next_question": "下一个问题",
+    "previous_question": "上一个问题",
+    "submit_test": "提交测试"
+  },
+  "history": {
+    "title": "您的测试历史",
+    "description": "查看您过去的所有自闭症谱系筛查测试",
+    "total_tests": "总测试数",
+    "average_score": "平均分数",
+    "high_risk_count": "高风险测试",
+    "date": "日期",
+    "score": "分数",
+    "status": "状态",
+    "action": "操作",
+    "view": "查看",
+    "export_data": "导出数据",
+    "export_analytics": "导出分析",
+    "export_features": "导出特征"
+  },
+  "features": {
+    "confidence": "置信区间",
+    "shap": "特征属性",
+    "ab_test": "A/B测试",
+    "calibration": "模型校准",
+    "retraining": "自动重新训练",
+    "export": "数据导出"
+  }
+}

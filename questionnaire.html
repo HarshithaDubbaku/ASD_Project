@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASD Screening Questionnaire</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="{{ url_for('home') }}" class="navbar-brand">🧠 ASD Prediction</a>
+            <ul class="navbar-nav">
+                <li><a href="{{ url_for('logout') }}" class="navbar-logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="center-box">
+            <h2>ASD Screening Questionnaire</h2>
+            <p class="text-muted">Please answer the following questions based on your observations. There are {{ questions|length }} questions in total.</p>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%;" id="progressFill"></div>
+                </div>
+                <p class="progress-text"><span id="currentQuestion">0</span> / {{ questions|length }} completed</p>
+            </div>
+
+            <form method="POST" action="{{ url_for('questionnaire') }}" id="questionnaireForm">
+                <!-- hidden field holds total questions so JS doesn't need inline Jinja expressions -->
+                <input type="hidden" id="totalQuestionsInput" value="{{ questions|length }}">
+                <div class="questions-grid">
+                    {% for i, question in questions|enumerate %}
+                        <div class="question-group" data-question="{{ i + 1 }}">
+                            <label class="question-text">{{ i + 1 }}. {{ question }}</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="q{{ i + 1 }}" value="Yes" required>
+                                    <span>Yes</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="q{{ i + 1 }}" value="No" required>
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block">Get Prediction</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 ASD Prediction App. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Update progress bar as user answers questions
+        const form = document.getElementById('questionnaireForm');
+        const progressFill = document.getElementById('progressFill');
+        const currentQuestionSpan = document.getElementById('currentQuestion');
+        // Read total questions from the hidden input to avoid Jinja inside JS
+        const totalQuestions = Number(document.getElementById('totalQuestionsInput')?.value || 0);
+
+        function updateProgress() {
+            const inputs = form.querySelectorAll('input[type="radio"]:checked');
+            const answered = inputs.length;
+            const percentage = (answered / totalQuestions) * 100;
+            progressFill.style.width = percentage + '%';
+            currentQuestionSpan.textContent = answered;
+        }
+
+        form.addEventListener('change', updateProgress);
+    </script>
+</body>
+</html>

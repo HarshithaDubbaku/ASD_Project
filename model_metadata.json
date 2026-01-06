@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-12-19T11:07:01.604068",
+  "n_estimators": 100,
+  "n_features": 5,
+  "classes": [
+    0.0,
+    1.0
+  ],
+  "feature_names": [
+    "Social",
+    "Repetitive",
+    "Emotional",
+    "Sensory",
+    "Solitude"
+  ]
+}

@@ -1,0 +1,11 @@
+[
+  {
+    "timestamp": "2025-12-31T07:45:37.053562",
+    "accuracy": 0.7,
+    "confidence_accuracy_gap": 0.25,
+    "total_responses": 50,
+    "avg_score": 0.5,
+    "positive_rate": 0.5,
+    "avg_confidence": 0.8
+  }
+]

@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "home": "హోమ్",
+    "new_test": "నতुན పరీక్ష",
+    "history": "చరిత్ర",
+    "logout": "లాగ్‌అవుట్",
+    "language": "భాష"
+  },
+  "auth": {
+    "login": "లాగిన్",
+    "register": "నిబంధన",
+    "username": "వినియోగదారు పేరు",
+    "password": "సంకేతపదం",
+    "email": "ఈమెల్ చిరునామా",
+    "login_button": "సైన్ ఇన్",
+    "register_button": "ఖాతా సృష్టించండి",
+    "already_member": "ఇప్పటికే సభ్యుడిని?",
+    "new_member": "ASD ప్రిడిక్షన్‌కు కొత్తది?"
+  },
+  "form": {
+    "age": "వయస్సు",
+    "gender": "లింగం",
+    "ethnicity": "జాతీయత",
+    "relation": "విషయానికి సంబంధం",
+    "submit": "సమర్పించు",
+    "cancel": "రద్దు చేయు",
+    "jaundice": "కామెర్లు చరిత్ర",
+    "used_app": "ఎర్రర్ స్క్రీనింగ్ అప్‌ను ఉపయోగించారు",
+    "next": "తరువాత",
+    "previous": "మునుపటి"
+  },
+  "messages": {
+    "welcome": "ASD ప్రిడిక్షన్‌కు స్వాగతం",
+    "login_success": "లాగిన్ విజయవంతమైంది!",
+    "logout_success": "మీరు లాగ్ అవుట్ చేయబడ్డారు.",
+    "error": "ఒక లోపం సంభవించింది",
+    "no_data": "డేటా అందుబాటులో లేదు",
+    "loading": "లోడ్‌ చేస్తోంది...",
+    "success": "విజయం"
+  },
+  "result": {
+    "score": "ప్రమాద స్కోర్",
+    "prediction": "ప్రవచనం",
+    "confidence": "నమ్మకం",
+    "high_risk": "అధిక ప్రమాద",
+    "low_risk": "తక్కువ ప్రమాద",
+    "moderate_risk": "మధ్యస్థ ప్రమాద",
+    "probability": "సంభావ్యత",
+    "interpretation": "వ్యాఖ్యానం",
+    "recommendation": "సిఫారసు"
+  },
+  "settings": {
+    "language": "భాష",
+    "save": "సేవ్ చేయు",
+    "cancel": "రద్దు చేయు",
+    "preferences": "ప్రాధాన్యతలు",
+    "language_changed": "భాష విజయవంతంగా మార్చబడింది"
+  },
+  "home": {
+    "title": "ASD ప్రిడిక్షన్ టూల్",
+    "subtitle": "ఆటిజం స్పెక్ట్రం డిసార్డర్ కోసం స్క్రీన్",
+    "description": "సంభావ్య ఆటిజం స్పెక్ట్రం డిసార్డర్ను గుర్తించడానికి సహాయ చేసే సమగ్ర సాధనం",
+    "get_started": "ప్రారంభించండి",
+    "features": "లక్షణాలు",
+    "about": "గురించి",
+    "contact": "సంपర్క"
+  },
+  "questionnaire": {
+    "title": "ASD స్క్రీనింగ్ ప్రశ్నపత్రిక",
+    "instructions": "దయచేసి అన్ని ప్రశ్నలకు నిజాయితీగా సమాధానం ఇవ్వండి",
+    "question": "ప్రశ్న",
+    "of": "యొక్క",
+    "yes": "అవును",
+    "no": "కాదు",
+    "next_question": "తదుపరి ప్రశ్న",
+    "previous_question": "మునుపటి ప్రశ్న",
+    "submit_test": "పరీక్ష సమర్పించు"
+  },
+  "history": {
+    "title": "మీ పరీక్ష చరిత్ర",
+    "description": "మీ గత ASD స్క్రీనింగ్ పరీక్షలను చూడండి",
+    "total_tests": "మొత్తం పరీక్షలు",
+    "average_score": "సగటు స్కోర్",
+    "high_risk_count": "అధిక ప్రమాద పరీక్షలు",
+    "date": "తేదీ",
+    "score": "స్కోర్",
+    "status": "స్థితి",
+    "action": "చర్య",
+    "view": "చూడండి",
+    "export_data": "డేటా ఎగుమతి చేయు",
+    "export_analytics": "విశ్లేషణలను ఎగుమతి చేయు",
+    "export_features": "లక్షణాలను ఎగుమతి చేయు"
+  },
+  "features": {
+    "confidence": "నమ్మకం విరామం",
+    "shap": "లక్షణ ఆపాదన",
+    "ab_test": "A/B పరీక్ష",
+    "calibration": "మోడల్ క్రమాంకనం",
+    "retraining": "స్వయంచాలక పునశ్శిక్షణ",
+    "export": "డేటా ఎగుమతి"
+  }
+}

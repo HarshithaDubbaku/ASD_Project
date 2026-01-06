@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "new_test": "新しいテスト",
+    "history": "履歴",
+    "logout": "ログアウト",
+    "language": "言語"
+  },
+  "auth": {
+    "login": "ログイン",
+    "register": "登録",
+    "username": "ユーザー名",
+    "password": "パスワード",
+    "email": "メールアドレス",
+    "login_button": "サインイン",
+    "register_button": "アカウント作成",
+    "already_member": "既にメンバーですか？",
+    "new_member": "ASD予測は初めてですか？"
+  },
+  "form": {
+    "age": "年齢",
+    "gender": "性別",
+    "ethnicity": "民族性",
+    "relation": "被験者との関係",
+    "submit": "送信",
+    "cancel": "キャンセル",
+    "jaundice": "黄疸の既往歴",
+    "used_app": "以前スクリーニングアプリを使用",
+    "next": "次へ",
+    "previous": "前へ"
+  },
+  "messages": {
+    "welcome": "ASD予測へようこそ",
+    "login_success": "ログインに成功しました！",
+    "logout_success": "ログアウトしました。",
+    "error": "エラーが発生しました",
+    "no_data": "利用可能なデータがありません",
+    "loading": "読み込み中...",
+    "success": "成功"
+  },
+  "result": {
+    "score": "リスクスコア",
+    "prediction": "予測",
+    "confidence": "信頼度",
+    "high_risk": "高リスク",
+    "low_risk": "低リスク",
+    "moderate_risk": "中程度のリスク",
+    "probability": "確率",
+    "interpretation": "解釈",
+    "recommendation": "推奨事項"
+  },
+  "settings": {
+    "language": "言語",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "preferences": "設定",
+    "language_changed": "言語が正常に変更されました"
+  },
+  "home": {
+    "title": "ASD予測ツール",
+    "subtitle": "自閉症スペクトラム障害のスクリーニング",
+    "description": "潜在的な自閉症スペクトラム障害を特定するのに役立つ包括的なツール",
+    "get_started": "始める",
+    "features": "機能",
+    "about": "について",
+    "contact": "お問い合わせ"
+  },
+  "questionnaire": {
+    "title": "ASDスクリーニング質問票",
+    "instructions": "すべての質問に正直に答えてください",
+    "question": "質問",
+    "of": "の",
+    "yes": "はい",
+    "no": "いいえ",
+    "next_question": "次の質問",
+    "previous_question": "前の質問",
+    "submit_test": "テストを送信"
+  },
+  "history": {
+    "title": "テスト履歴",
+    "description": "過去のすべてのASDスクリーニングテストを表示",
+    "total_tests": "総テスト数",
+    "average_score": "平均スコア",
+    "high_risk_count": "高リスクテスト",
+    "date": "日付",
+    "score": "スコア",
+    "status": "ステータス",
+    "action": "アクション",
+    "view": "表示",
+    "export_data": "データをエクスポート",
+    "export_analytics": "分析をエクスポート",
+    "export_features": "機能をエクスポート"
+  },
+  "features": {
+    "confidence": "信頼区間",
+    "shap": "機能帰属",
+    "ab_test": "A/Bテスト",
+    "calibration": "モデルキャリブレーション",
+    "retraining": "自動再トレーニング",
+    "export": "データエクスポート"
+  }
+}

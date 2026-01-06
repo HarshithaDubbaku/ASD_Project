@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A/B Testing - ASD Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="{{ url_for('home') }}" class="navbar-brand">🧠 ASD Prediction</a>
+            <ul class="navbar-nav">
+                <li><a href="{{ url_for('history') }}" class="navbar-link">History</a></li>
+                <li><a href="{{ url_for('logout') }}" class="navbar-logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="center-box">
+            <h2>📊 Model A/B Testing</h2>
+            <p class="subtitle">Compare performance between model versions (Control vs Treatment)</p>
+
+            {% if error %}
+            <div class="alert alert-error">
+                <strong>Error:</strong> {{ error }}
+            </div>
+            {% endif %}
+
+            <form method="POST" class="form-group">
+                <label for="n_samples"><strong>Number of Test Samples:</strong></label>
+                <input type="number" id="n_samples" name="n_samples" value="200" min="50" max="1000" required>
+                <small>Test set size (50-1000 samples)</small>
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Run A/B Test</button>
+            </form>
+
+            {% if summary %}
+            <!-- Test Summary Section -->
+            <div class="ab-test-summary">
+                <h3>⚡ Test Summary</h3>
+                
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <strong>Sample Size:</strong>
+                        <span>{{ summary.sample_size }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <strong>Model V1 Mean:</strong>
+                        <span>{{ summary.model_v1_mean }}%</span>
+                    </div>
+                    <div class="summary-item">
+                        <strong>Model V2 Mean:</strong>
+                        <span>{{ summary.model_v2_mean }}%</span>
+                    </div>
+                    <div class="summary-item">
+                        <strong>Difference:</strong>
+                        <span class="{% if summary.difference > 0 %}text-positive{% else %}text-negative{% endif %}">
+                            {{ summary.difference }}%
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Winner and Recommendation -->
+                <div class="winner-box {% if 'V2' in summary.winner %}winner-v2{% elif 'V1' in summary.winner %}winner-v1{% else %}winner-tie{% endif %}">
+                    <h4>🏆 Result</h4>
+                    <p><strong>Winner:</strong> {{ summary.winner }}</p>
+                    <p><strong>Confidence:</strong> {{ summary.confidence }}</p>
+                    <p><strong>Effect Size:</strong> {{ summary.effect_size|capitalize }}</p>
+                    <p><strong>Recommendation:</strong> {{ summary.recommendation }}</p>
+                </div>
+            </div>
+
+            <!-- Statistical Results Section -->
+            <div class="ab-test-stats">
+                <h3>📈 Statistical Analysis</h3>
+
+                <!-- T-Test Results -->
+                <div class="stats-card">
+                    <h4>Independent T-Test (Parametric)</h4>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <strong>T-Statistic:</strong>
+                            <code>{{ "%.4f"|format(results.ttest.t_statistic) }}</code>
+                        </div>
+                        <div class="stat-item">
+                            <strong>P-Value:</strong>
+                            <code>{{ "%.6f"|format(results.ttest.p_value) }}</code>
+                        </div>
+                        <div class="stat-item">
+                            <strong>Cohen's d:</strong>
+                            <code>{{ "%.4f"|format(results.ttest.cohens_d) }}</code>
+                        </div>
+                        <div class="stat-item">
+                            <strong>Significant (α=0.05):</strong>
+                            <span class="badge {% if results.ttest.significant %}badge-success{% else %}badge-info{% endif %}">
+                                {{ "Yes" if results.ttest.significant else "No" }}
+                            </span>
+                        </div>
+                    </div>
+                    <p class="stat-interpretation">
+                        {% if results.ttest.p_value < 0.001 %}
+                        Very strong evidence of difference (p < 0.001)
+                        {% elif results.ttest.p_value < 0.01 %}
+                        Strong evidence of difference (p < 0.01)
+                        {% elif results.ttest.p_value < 0.05 %}
+                        Moderate evidence of difference (p < 0.05)
+                        {% else %}
+                        No significant difference detected (p ≥ 0.05)
+                        {% endif %}
+                    </p>
+                </div>
+
+                <!-- Mann-Whitney U Test -->
+                <div class="stats-card">
+                    <h4>Mann-Whitney U Test (Non-Parametric)</h4>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <strong>U-Statistic:</strong>
+                            <code>{{ "%.2f"|format(results.mann_whitney.u_statistic) }}</code>
+                        </div>
+                        <div class="stat-item">
+                            <strong>P-Value:</strong>
+                            <code>{{ "%.6f"|format(results.mann_whitney.p_value) }}</code>
+                        </div>
+                        <div class="stat-item">
+                            <strong>Significant (α=0.05):</strong>
+                            <span class="badge {% if results.mann_whitney.significant %}badge-success{% else %}badge-info{% endif %}">
+                                {{ "Yes" if results.mann_whitney.significant else "No" }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Confidence Intervals -->
+                <div class="stats-card">
+                    <h4>95% Confidence Intervals</h4>
+                    <div class="ci-comparison">
+                        <div class="ci-item">
+                            <h5>Model V1 (Control)</h5>
+                            <p><strong>Mean:</strong> {{ "%.2f"|format(results.confidence_intervals.model_v1.mean) }}%</p>
+                            <p><strong>95% CI:</strong> [{{ "%.2f"|format(results.confidence_intervals.model_v1.ci_lower) }}%, {{ "%.2f"|format(results.confidence_intervals.model_v1.ci_upper) }}%]</p>
+                            <div class="ci-bar">
+                                <div class="ci-range" style="left: {{ results.confidence_intervals.model_v1.ci_lower }}%; right: {{ 100 - results.confidence_intervals.model_v1.ci_upper }}%;"></div>
+                            </div>
+                        </div>
+                        <div class="ci-item">
+                            <h5>Model V2 (Treatment)</h5>
+                            <p><strong>Mean:</strong> {{ "%.2f"|format(results.confidence_intervals.model_v2.mean) }}%</p>
+                            <p><strong>95% CI:</strong> [{{ "%.2f"|format(results.confidence_intervals.model_v2.ci_lower) }}%, {{ "%.2f"|format(results.confidence_intervals.model_v2.ci_upper) }}%]</p>
+                            <div class="ci-bar">
+                                <div class="ci-range" style="left: {{ results.confidence_intervals.model_v2.ci_lower }}%; right: {{ 100 - results.confidence_intervals.model_v2.ci_upper }}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="stat-interpretation">
+                        {% if results.confidence_intervals.overlap %}
+                        ⚠️ Confidence intervals overlap - overlapping ranges suggest similar performance
+                        {% else %}
+                        ✓ Confidence intervals do not overlap - clear separation between models
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Descriptive Statistics Section -->
+            <div class="ab-test-descriptive">
+                <h3>📊 Descriptive Statistics</h3>
+
+                <div class="descriptive-grid">
+                    <div class="descriptive-model">
+                        <h4>Model V1 (Control)</h4>
+                        <table class="stats-table">
+                            <tr>
+                                <td><strong>Mean</strong></td>
+                                <td>{{ "%.2f"|format(results.descriptive_stats.model_v1.mean) }}%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Median</strong></td>
+                                <td>{{ "%.2f"|format(results.descriptive_stats.model_v1.median) }}%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Std Dev</strong></td>
+                                <td>{{ "%.2f"|format(results.descriptive_stats.model_v1.std) }}%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Min</strong></td>
+                                <td>{{ "%.2f"|format(results.descriptive_stats.model_v1.min) }}%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Max</strong></td>
+                                <td>{{ "%.2f"|format(results.descriptive_stats.model_v1.max) }}%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Q25</strong></td>
+                                <td>{{ "%.2f"|format(results.descriptive_stats.model_v1.q25) }}%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Q75</strong></td>
+                                <td>{{ "%.2f"|format(results.descriptive_stats.model_v1.q75) }}%</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="descriptive-model">
+                        <h4>Model V2 (Treatment)</h4>
+                        <table class="stats-table">
+                            <tr>
+                                <td><strong>Mean</strong></td>
+                                <td>{{ "%.2f"|format(results.descriptive_stats.model_v2.mean) }}%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Median</strong></td>
+                                <td>{{ "%.2f"|format(results.descriptive_stats.model_v2.median) }}%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Std Dev</strong></td>
+                                <td>{{ "%.2f"|format(results.descriptive_stats.model_v2.std) }}%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Min</strong></td>
+                                <td>{{ "%.2f"|format(results.descriptive_stats.model_v2.min) }}%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Max</strong></td>
+                                <td>{{ "%.2f"|format(results.descriptive_stats.model_v2.max) }}%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Q25</strong></td>
+                                <td>{{ "%.2f"|format(results.descriptive_stats.model_v2.q25) }}%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Q75</strong></td>
+                                <td>{{ "%.2f"|format(results.descriptive_stats.model_v2.q75) }}%</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Information Box -->
+            <div class="info-box" style="margin-top: 2rem;">
+                <h4>ℹ️ About A/B Testing</h4>
+                <p><strong>Control (V1):</strong> The baseline model currently in production</p>
+                <p><strong>Treatment (V2):</strong> The new model version being evaluated</p>
+                <p><strong>Significance Level:</strong> α = 0.05 (95% confidence)</p>
+                <p><strong>Tests Used:</strong></p>
+                <ul>
+                    <li><strong>T-Test:</strong> Parametric test assuming normal distribution</li>
+                    <li><strong>Mann-Whitney U:</strong> Non-parametric alternative for robustness</li>
+                    <li><strong>Confidence Intervals:</strong> Range of likely population means</li>
+                </ul>
+                <p><strong>Interpretation:</strong> If p-value < 0.05, there is strong statistical evidence that the models differ</p>
+            </div>
+
+            <div class="form-actions">
+                <a href="{{ url_for('history') }}" class="btn btn-secondary">Back to History</a>
+                <a href="{{ url_for('home') }}" class="btn btn-primary">Go Home</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 ASD Prediction App. All rights reserved.</p>
+    </footer>
+</body>
+</html>

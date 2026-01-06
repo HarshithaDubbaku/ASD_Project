@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "new_test": "Nouveau Test",
+    "history": "Historique",
+    "logout": "Déconnexion",
+    "language": "Langue"
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "email": "Adresse Email",
+    "login_button": "Se connecter",
+    "register_button": "Créer un compte",
+    "already_member": "Déjà membre?",
+    "new_member": "Nouveau sur Prédiction TSA?"
+  },
+  "form": {
+    "age": "Âge",
+    "gender": "Sexe",
+    "ethnicity": "Ethnicité",
+    "relation": "Relation avec le sujet",
+    "submit": "Soumettre",
+    "cancel": "Annuler",
+    "jaundice": "Antécédents d'Ictère",
+    "used_app": "Utilisé l'application de dépistage auparavant",
+    "next": "Suivant",
+    "previous": "Précédent"
+  },
+  "messages": {
+    "welcome": "Bienvenue sur Prédiction TSA",
+    "login_success": "Connexion réussie!",
+    "logout_success": "Vous avez été déconnecté.",
+    "error": "Une erreur s'est produite",
+    "no_data": "Aucune donnée disponible",
+    "loading": "Chargement...",
+    "success": "Succès"
+  },
+  "result": {
+    "score": "Score de Risque",
+    "prediction": "Prédiction",
+    "confidence": "Confiance",
+    "high_risk": "Risque Élevé",
+    "low_risk": "Risque Faible",
+    "moderate_risk": "Risque Modéré",
+    "probability": "Probabilité",
+    "interpretation": "Interprétation",
+    "recommendation": "Recommandation"
+  },
+  "settings": {
+    "language": "Langue",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "preferences": "Préférences",
+    "language_changed": "Langue changée avec succès"
+  },
+  "home": {
+    "title": "Outil de Prédiction TSA",
+    "subtitle": "Dépistage des Troubles du Spectre Autiste",
+    "description": "Un outil complet pour aider à identifier les troubles du spectre autiste",
+    "get_started": "Commencer",
+    "features": "Caractéristiques",
+    "about": "À propos",
+    "contact": "Contact"
+  },
+  "questionnaire": {
+    "title": "Questionnaire de Dépistage TSA",
+    "instructions": "Veuillez répondre à toutes les questions honnêtement",
+    "question": "Question",
+    "of": "de",
+    "yes": "Oui",
+    "no": "Non",
+    "next_question": "Question Suivante",
+    "previous_question": "Question Précédente",
+    "submit_test": "Soumettre le Test"
+  },
+  "history": {
+    "title": "Votre Historique de Tests",
+    "description": "Consultez tous vos tests de dépistage TSA précédents",
+    "total_tests": "Tests Totaux",
+    "average_score": "Score Moyen",
+    "high_risk_count": "Tests à Haut Risque",
+    "date": "Date",
+    "score": "Score",
+    "status": "Statut",
+    "action": "Action",
+    "view": "Voir",
+    "export_data": "Exporter les Données",
+    "export_analytics": "Exporter l'Analyse",
+    "export_features": "Exporter les Caractéristiques"
+  },
+  "features": {
+    "confidence": "Intervalles de Confiance",
+    "shap": "Attribution des Caractéristiques",
+    "ab_test": "Test A/B",
+    "calibration": "Calibrage du Modèle",
+    "retraining": "Réentraînement Automatique",
+    "export": "Export de Données"
+  }
+}

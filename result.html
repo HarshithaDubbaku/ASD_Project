@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASD Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="{{ url_for('home') }}" class="navbar-brand">🧠 ASD Prediction</a>
+            <ul class="navbar-nav">
+                <li><a href="{{ url_for('logout') }}" class="navbar-logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="center-box">
+            <h2>Your ASD Screening Result</h2>
+
+            <div class="score-display">
+                <div class="score-value">{{ score }}%</div>
+                <p class="score-label">Probability of ASD Characteristics</p>
+            </div>
+
+            <div class="progress-bar" style="margin: 2rem 0;">
+                <div class="progress-fill" data-score="{{ score }}"></div>
+            </div>
+
+            <div class="score-interpretation {% if score >= 70 %}score-high{% elif score >= 30 %}score-medium{% else %}score-low{% endif %}">
+                <h3>
+                    {% if score >= 70 %}
+                        ⚠️ High Probability
+                    {% elif score >= 30 %}
+                        📊 Moderate Probability
+                    {% else %}
+                        ✅ Low Probability
+                    {% endif %}
+                </h3>
+                <p>
+                    {% if score >= 70 %}
+                        This screening suggests a high probability of ASD characteristics. We recommend consulting with a healthcare professional for a comprehensive evaluation.
+                    {% elif score >= 30 %}
+                        This screening suggests some ASD characteristics. Consider discussing the results with a healthcare professional for further assessment.
+                    {% else %}
+                        This screening suggests a low probability of ASD characteristics based on your responses.
+                    {% endif %}
+                </p>
+            </div>
+
+            <!-- Confidence Interval Section (Extension 3) -->
+            {% if confidence and confidence.ci_lower is not none %}
+            <div class="confidence-section">
+                <h3>📊 Confidence Analysis</h3>
+                
+                <div class="confidence-badge" data-quality="{{ confidence.quality }}">
+                    <strong>Confidence Level:</strong> {{ confidence.assessment }}
+                </div>
+
+                <div class="confidence-interval">
+                    <p><strong>Likely Range (95% Confidence):</strong></p>
+                    <div class="ci-display">
+                        <div class="ci-lower">{{ confidence.ci_lower }}%</div>
+                        <div class="ci-bar">
+                            <div class="ci-range" style="left: {{ confidence.ci_lower }}%; right: {{ 100 - confidence.ci_upper }}%;"></div>
+                        </div>
+                        <div class="ci-upper">{{ confidence.ci_upper }}%</div>
+                    </div>
+                </div>
+
+                <div class="interpretation-box">
+                    <p><strong>What This Means:</strong></p>
+                    <p>{{ confidence.interpretation }}</p>
+                </div>
+
+                <div class="recommendation-box">
+                    <p><strong>Clinical Recommendation:</strong></p>
+                    <p>{{ confidence.recommendation }}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Feature Attribution Section (Extension 4) -->
+            {% if shap %}
+            <div class="shap-section">
+                <h3>🔍 What Drove This Result?</h3>
+                
+                <div class="top-features">
+                    <p><strong>Most Influential Factors:</strong></p>
+                    <div class="feature-cards">
+                        {% for feature in shap.top_features %}
+                        <div class="feature-impact-card">
+                            <div class="feature-direction" data-direction="{{ feature.direction }}">
+                                {% if feature.direction == 'positive' %}
+                                    ↑ Increases Risk
+                                {% else %}
+                                    ↓ Decreases Risk
+                                {% endif %}
+                            </div>
+                            <div class="feature-name">{{ feature.feature }}</div>
+                            <div class="feature-impact-value">{{ "%.1f"|format(feature.contribution * 100) }}%</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="all-features">
+                    <p><strong>Detailed Feature Analysis:</strong></p>
+                    <div class="feature-analysis-grid">
+                        {% set feature_names = shap.feature_names %}
+                        {% for i, name in enumerate(feature_names) %}
+                        <div class="feature-analysis">
+                            <div class="feature-header">
+                                <span class="feature-title">{{ name }}</span>
+                                <span class="feature-status" data-status="{% if shap.feature_values[i] == 1 %}positive{% else %}negative{% endif %}">
+                                    {% if shap.feature_values[i] == 1 %}✓ Yes{% else %}✗ No{% endif %}
+                                </span>
+                            </div>
+                            <div class="feature-explanation">{{ shap.feature_explanations[name] }}</div>
+                            <div class="contribution-bar">
+                                <div class="contribution-fill" style="width: {{ (shap.contributions[i] / 100 * 100)|int }}%; background: {% if shap.contributions[i] > 0 %}#ef4444{% else %}#10b981{% endif %};"></div>
+                                <span class="contribution-value">{{ shap.contributions[i] }}%</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="info-box">
+                <h4>Important Note</h4>
+                <p>This app is a screening tool and <strong>not a diagnostic instrument</strong>. Results should not be used to make any medical decisions. Please consult with a qualified healthcare professional for proper diagnosis and treatment options.</p>
+            </div>
+
+            <div class="form-actions">
+                <a href="{{ url_for('history') }}" class="btn btn-secondary">View History</a>
+                <a href="{{ url_for('user_info') }}" class="btn btn-secondary">Take Another Test</a>
+                <a href="{{ url_for('home') }}" class="btn btn-primary">Go Home</a>
+                <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 ASD Prediction App. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Set progress-fill width from data-score attribute (clamp between 0 and 100)
+        (function(){
+            const fill = document.querySelector('.progress-fill');
+            if(!fill) return;
+            let val = Number(fill.dataset.score);
+            if(!isFinite(val)) val = 0;
+            // clamp and round to 2 decimals
+            val = Math.max(0, Math.min(100, Math.round(val * 100) / 100));
+            fill.style.width = val + '%';
+            // Make the percentage visible for assistive tech / users
+            fill.textContent = val + '%';
+        })();
+    </script>
+</body>
+</html>

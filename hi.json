@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "home": "होम",
+    "new_test": "नया परीक्षण",
+    "history": "इतिहास",
+    "logout": "लॉग आउट",
+    "language": "भाषा"
+  },
+  "auth": {
+    "login": "लॉगिन करें",
+    "register": "पंजीकरण",
+    "username": "उपयोगकर्ता नाम",
+    "password": "पासवर्ड",
+    "email": "ईमेल पता",
+    "login_button": "साइन इन करें",
+    "register_button": "खाता बनाएं",
+    "already_member": "पहले से सदस्य?",
+    "new_member": "ASD प्रेडिक्शन में नए हैं?"
+  },
+  "form": {
+    "age": "आयु",
+    "gender": "लिंग",
+    "ethnicity": "जातीयता",
+    "relation": "विषय से संबंध",
+    "submit": "सबमिट करें",
+    "cancel": "रद्द करें",
+    "jaundice": "पीलिया का इतिहास",
+    "used_app": "पहले स्क्रीनिंग ऐप का उपयोग किया",
+    "next": "अगला",
+    "previous": "पिछला"
+  },
+  "messages": {
+    "welcome": "ASD प्रेडिक्शन में आपका स्वागत है",
+    "login_success": "लॉगिन सफल!",
+    "logout_success": "आप लॉग आउट कर दिए गए हैं।",
+    "error": "एक त्रुटि हुई",
+    "no_data": "कोई डेटा उपलब्ध नहीं",
+    "loading": "लोड हो रहा है...",
+    "success": "सफल"
+  },
+  "result": {
+    "score": "जोखिम स्कोर",
+    "prediction": "भविष्यवाणी",
+    "confidence": "आत्मविश्वास",
+    "high_risk": "उच्च जोखिम",
+    "low_risk": "कम जोखिम",
+    "moderate_risk": "मध्यम जोखिम",
+    "probability": "संभावना",
+    "interpretation": "व्याख्या",
+    "recommendation": "सिफारिश"
+  },
+  "settings": {
+    "language": "भाषा",
+    "save": "सेव करें",
+    "cancel": "रद्द करें",
+    "preferences": "प्राथमिकताएं",
+    "language_changed": "भाषा सफलतापूर्वक बदल गई"
+  },
+  "home": {
+    "title": "ASD प्रेडिक्शन टूल",
+    "subtitle": "ऑटिजम स्पेक्ट्रम डिसऑर्डर की जांच",
+    "description": "संभावित ऑटिजम स्पेक्ट्रम डिसऑर्डर की पहचान करने में मदद करने के लिए एक व्यापक उपकरण",
+    "get_started": "शुरू करें",
+    "features": "विशेषताएं",
+    "about": "परिचय",
+    "contact": "संपर्क"
+  },
+  "questionnaire": {
+    "title": "ASD स्क्रीनिंग प्रश्नावली",
+    "instructions": "कृपया सभी प्रश्नों का ईमानदारी से उत्तर दें",
+    "question": "प्रश्न",
+    "of": "का",
+    "yes": "हाँ",
+    "no": "नहीं",
+    "next_question": "अगला प्रश्न",
+    "previous_question": "पिछला प्रश्न",
+    "submit_test": "परीक्षण जमा करें"
+  },
+  "history": {
+    "title": "आपका परीक्षण इतिहास",
+    "description": "अपने सभी पिछले ASD स्क्रीनिंग परीक्षणों को देखें",
+    "total_tests": "कुल परीक्षण",
+    "average_score": "औसत स्कोर",
+    "high_risk_count": "उच्च जोखिम परीक्षण",
+    "date": "तारीख",
+    "score": "स्कोर",
+    "status": "स्थिति",
+    "action": "कार्रवाई",
+    "view": "देखें",
+    "export_data": "डेटा निर्यात करें",
+    "export_analytics": "विश्लेषण निर्यात करें",
+    "export_features": "विशेषताएं निर्यात करें"
+  },
+  "features": {
+    "confidence": "विश्वास अंतराल",
+    "shap": "फीचर एट्रिब्यूशन",
+    "ab_test": "A/B परीक्षण",
+    "calibration": "मॉडल कैलिब्रेशन",
+    "retraining": "स्वचालित पुनः प्रशिक्षण",
+    "export": "डेटा निर्यात"
+  }
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Details - ASD Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="{{ url_for('home') }}" class="navbar-brand">🧠 ASD Prediction</a>
+            <ul class="navbar-nav">
+                <li><a href="{{ url_for('history') }}" class="navbar-link">Back to History</a></li>
+                <li><a href="{{ url_for('logout') }}" class="navbar-logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="center-box">
+            <h2>Test Details</h2>
+
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <strong>Date:</strong> {{ response.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}
+                </div>
+                <div class="detail-item">
+                    <strong>Relation:</strong> {{ response.relation }}
+                </div>
+                <div class="detail-item">
+                    <strong>Age:</strong> {{ response.age if response.age else 'Not specified' }}
+                </div>
+                <div class="detail-item">
+                    <strong>Gender:</strong> {{ response.gender if response.gender else 'Not specified' }}
+                </div>
+            </div>
+
+            <div class="score-display">
+                <div class="score-value">{{ response.score }}%</div>
+                <p class="score-label">Probability of ASD Characteristics</p>
+            </div>
+
+            <div class="progress-bar" style="margin: 2rem 0;">
+                <div class="progress-fill" data-score="{{ response.score }}"></div>
+            </div>
+
+            <div class="score-interpretation {% if response.score >= 70 %}score-high{% elif response.score >= 30 %}score-medium{% else %}score-low{% endif %}">
+                <h3>
+                    {% if response.score >= 70 %}
+                        ⚠️ High Probability
+                    {% elif response.score >= 30 %}
+                        📊 Moderate Probability
+                    {% else %}
+                        ✅ Low Probability
+                    {% endif %}
+                </h3>
+            </div>
+
+            <!-- Confidence Interval Display (Extension 3) -->
+            {% if response.ci_lower is not none %}
+            <div class="confidence-section">
+                <h3>📊 Confidence Analysis</h3>
+                
+                <div class="confidence-badge" data-quality="{{ response.confidence_quality }}">
+                    <strong>Confidence Level:</strong> {{ response.confidence_assessment }}
+                </div>
+
+                <div class="confidence-interval">
+                    <p><strong>Likely Range (95% Confidence):</strong></p>
+                    <div class="ci-display">
+                        <div class="ci-lower">{{ response.ci_lower }}%</div>
+                        <div class="ci-bar">
+                            <div class="ci-range" style="left: {{ response.ci_lower }}%; right: {{ 100 - response.ci_upper }}%;"></div>
+                        </div>
+                        <div class="ci-upper">{{ response.ci_upper }}%</div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Feature Attribution Display (Extension 4) -->
+            {% if response.feature_contributions %}
+            <div class="shap-section">
+                <h3>🔍 Feature Contributions</h3>
+                <div class="all-features">
+                    <p><strong>How Each Feature Contributed:</strong></p>
+                    <div class="feature-analysis-grid">
+                        {% set feature_names = ['Social Interaction', 'Repetitive Behaviors', 'Emotional Understanding', 'Sensory Sensitivities', 'Preference for Solitude'] %}
+                        {% set features_list = response.features if response.features is iterable and response.features is not string else [0, 0, 0, 0, 0] %}
+                        {% for i in range(feature_names|length) %}
+                        <div class="feature-analysis">
+                            <div class="feature-header">
+                                <span class="feature-title">{{ feature_names[i] }}</span>
+                                <span class="feature-status" data-status="{% if features_list[i] == 1 %}positive{% else %}negative{% endif %}">
+                                    {% if features_list[i] == 1 %}✓ Yes{% else %}✗ No{% endif %}
+                                </span>
+                            </div>
+                            <div class="feature-explanation">{{ response.feature_contributions.get(feature_names[i], 'N/A') if response.feature_contributions is mapping else 'N/A' }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <h3 style="margin-top: 2rem;">Feature Analysis</h3>
+            <div class="features-breakdown">
+                {% set feature_names = ['Social Interaction', 'Repetitive Behaviors', 'Emotional Understanding', 'Sensory Sensitivities', 'Preference for Solitude'] %}
+                {% set features_list = response.features if response.features is iterable and response.features is not string else [0, 0, 0, 0, 0] %}
+                {% for i in range(feature_names|length) %}
+                    <div class="feature-card">
+                        <div class="feature-name">Feature {{ i + 1 }}: {{ feature_names[i] }}</div>
+                        <div class="feature-value">
+                            {% if features_list[i] == 1 %}
+                                <span class="badge badge-danger">Positive</span>
+                            {% else %}
+                                <span class="badge badge-success">Negative</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <h3 style="margin-top: 2rem;">Summary</h3>
+            <div class="info-box">
+                <p>This test was completed on <strong>{{ response.timestamp.strftime('%B %d, %Y') }}</strong> as a <strong>{{ response.relation }}</strong> evaluation.</p>
+                {% set answers_list = response.answers if response.answers is iterable and response.answers is not string else [] %}
+                {% set features_list = response.features if response.features is iterable and response.features is not string else [] %}
+                <p>Out of {{ answers_list|length }} questions, <strong>{{ answers_list|sum }}</strong> were answered "Yes".</p>
+                <p>Based on the feature aggregation model, <strong>{{ features_list|sum }}</strong> out of 5 key features were identified.</p>
+            </div>
+
+            <div class="form-actions">
+                <a href="{{ url_for('history') }}" class="btn btn-secondary">Back to History</a>
+                <a href="{{ url_for('home') }}" class="btn btn-primary">Go Home</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 ASD Prediction App. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Set progress-fill width from data-score attribute (clamp between 0 and 100)
+        (function(){
+            const fill = document.querySelector('.progress-fill');
+            if(!fill) return;
+            let val = Number(fill.dataset.score);
+            if(!isFinite(val)) val = 0;
+            val = Math.max(0, Math.min(100, Math.round(val * 100) / 100));
+            fill.style.width = val + '%';
+            fill.textContent = val + '%';
+        })();
+    </script>
+</body>
+</html>

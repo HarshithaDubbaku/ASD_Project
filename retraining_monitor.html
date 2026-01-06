@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Retraining Monitor - ASD Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .monitor-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .status-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+        }
+        
+        .status-card.warning {
+            border-left-color: #f59e0b;
+            background: #fef3c7;
+        }
+        
+        .status-card.success {
+            border-left-color: #10b981;
+            background: #ecfdf5;
+        }
+        
+        .status-card.error {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+        
+        .status-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+        
+        .status-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .metric {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        
+        .metric-unit {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        .trend-positive {
+            color: #10b981;
+        }
+        
+        .trend-negative {
+            color: #ef4444;
+        }
+        
+        .trend-neutral {
+            color: #6b7280;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+        
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .history-table th {
+            background: #f3f4f6;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .history-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            color: #6b7280;
+        }
+        
+        .history-table tr:hover {
+            background: #f9fafb;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .badge-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .badge-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .loading {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .alert {
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            border-left: 4px solid;
+        }
+        
+        .alert-info {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+        
+        .alert-warning {
+            background: #fef3c7;
+            border-color: #f59e0b;
+            color: #92400e;
+        }
+        
+        .alert-error {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+        
+        .config-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            margin: 15px 0;
+        }
+        
+        .form-group {
+            margin: 15px 0;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #1f2937;
+            font-size: 14px;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-group-inline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">ASD Prediction System</h1>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('questionnaire') }}">Take Test</a></li>
+                <li><a href="{{ url_for('history') }}">History</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="monitor-container">
+        <h1 style="color: #1f2937; margin-bottom: 10px;">Model Retraining Monitor</h1>
+        <p style="color: #6b7280; margin-bottom: 30px;">Track model performance and automatic retraining events</p>
+
+        <!-- Current Status -->
+        <div class="status-card {% if status.should_retrain %}warning{% elif status.performance_trend.needs_retraining %}warning{% else %}success{% endif %}">
+            <div class="status-title">
+                {% if status.should_retrain or status.performance_trend.needs_retraining %}
+                    ⚠️ Retraining Recommended
+                {% else %}
+                    ✓ Model Performing Well
+                {% endif %}
+            </div>
+            <div class="status-content">
+                <div class="metric">
+                    <div class="metric-label">Status</div>
+                    <div class="metric-value">
+                        {% if status.should_retrain %}
+                            Retraining Needed
+                        {% else %}
+                            Healthy
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Reason</div>
+                    <div class="metric-value" style="font-size: 14px;">
+                        {{ status.retraining_reason }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div class="status-card">
+            <div class="status-title">Performance Metrics</div>
+            <div class="status-content">
+                <div class="metric">
+                    <div class="metric-label">Average Accuracy</div>
+                    <div class="metric-value">{{ "%.2f" | format(status.performance_trend.avg_accuracy * 100) }}%</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Accuracy Trend</div>
+                    <div class="metric-value {% if status.performance_trend.accuracy_trend > 0 %}trend-positive{% elif status.performance_trend.accuracy_trend < 0 %}trend-negative{% else %}trend-neutral{% endif %}">
+                        {% if status.performance_trend.accuracy_trend > 0 %}↑{% elif status.performance_trend.accuracy_trend < 0 %}↓{% else %}→{% endif %}
+                        {{ "%.2f" | format(status.performance_trend.accuracy_trend * 100) }}%
+                    </div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Confidence Gap</div>
+                    <div class="metric-value">{{ "%.2f" | format(status.performance_trend.avg_confidence_gap * 100) }}%</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Total Retrainings</div>
+                    <div class="metric-value">{{ status.total_retrainings }}</div>
+                </div>
+            </div>
+
+            {% if status.last_retraining %}
+            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
+                <div class="metric-label">Last Retraining</div>
+                <p style="color: #6b7280; margin: 5px 0;">{{ status.last_retraining.timestamp }}</p>
+                <p style="color: #6b7280; margin: 5px 0; font-size: 13px;">
+                    {% if status.last_retraining.accuracy_improvement %}
+                        Accuracy improvement: 
+                        <span class="{% if status.last_retraining.accuracy_improvement > 0 %}trend-positive{% else %}trend-negative{% endif %}">
+                            {{ "%.2f" | format(status.last_retraining.accuracy_improvement * 100) }}%
+                        </span>
+                    {% endif %}
+                </p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Retraining Controls -->
+        <div class="status-card">
+            <div class="status-title">Retraining Controls</div>
+            <div class="button-group">
+                <form method="POST" action="{{ url_for('trigger_retraining') }}" style="display: inline;">
+                    <button type="submit" class="btn btn-primary" {% if not status.should_retrain %}disabled{% endif %}>
+                        Trigger Retraining Now
+                    </button>
+                </form>
+                <button class="btn btn-secondary" onclick="loadRetrainingLog()">
+                    View History
+                </button>
+            </div>
+            
+            {% if not status.should_retrain %}
+            <div class="alert alert-info" style="margin-top: 15px;">
+                <strong>Note:</strong> Model is currently performing well. Retraining will be triggered automatically when performance degrades.
+            </div>
+            {% else %}
+            <div class="alert alert-warning" style="margin-top: 15px;">
+                <strong>Recommendation:</strong> Consider triggering retraining to improve model performance.
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Configuration Section -->
+        <div class="status-card">
+            <div class="status-title">Retraining Configuration</div>
+            <form method="POST" action="{{ url_for('update_retraining_config') }}" class="config-form">
+                <div class="form-group-inline">
+                    <div class="form-group">
+                        <label for="accuracy_threshold">Accuracy Threshold (%)</label>
+                        <input type="number" id="accuracy_threshold" name="accuracy_threshold" 
+                               value="{{ (status.config.accuracy_threshold * 100) | int }}" 
+                               min="0" max="100" step="5">
+                    </div>
+                    <div class="form-group">
+                        <label for="confidence_gap_threshold">Confidence Gap Threshold (%)</label>
+                        <input type="number" id="confidence_gap_threshold" name="confidence_gap_threshold" 
+                               value="{{ (status.config.confidence_gap_threshold * 100) | int }}" 
+                               min="0" max="50" step="5">
+                    </div>
+                    <div class="form-group">
+                        <label for="lookback_days">Lookback Period (days)</label>
+                        <input type="number" id="lookback_days" name="lookback_days" 
+                               value="{{ status.config.lookback_days }}" 
+                               min="1" max="90" step="1">
+                    </div>
+                </div>
+                <div class="form-group-inline">
+                    <div class="form-group">
+                        <label for="min_responses">Min Responses for Retraining</label>
+                        <input type="number" id="min_responses" name="min_responses_for_retraining" 
+                               value="{{ status.config.min_responses_for_retraining }}" 
+                               min="10" max="1000" step="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="check_interval">Check Interval (hours)</label>
+                        <input type="number" id="check_interval" name="check_interval_hours" 
+                               value="{{ status.config.check_interval_hours }}" 
+                               min="1" max="168" step="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="auto_retrain">Auto Retrain Enabled</label>
+                        <select id="auto_retrain" name="auto_retrain_enabled">
+                            <option value="True" {% if status.config.auto_retrain_enabled %}selected{% endif %}>Enabled</option>
+                            <option value="False" {% if not status.config.auto_retrain_enabled %}selected{% endif %}>Disabled</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top: 15px;">
+                    Save Configuration
+                </button>
+            </form>
+        </div>
+
+        <!-- Retraining History -->
+        <div class="status-card">
+            <div class="status-title">Retraining History</div>
+            <div id="history-container">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Duration (s)</th>
+                            <th>Accuracy Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body">
+                        {% if status.last_retraining %}
+                        <tr>
+                            <td>{{ status.last_retraining.timestamp }}</td>
+                            <td>{{ status.last_retraining.trigger_reason[:50] }}...</td>
+                            <td><span class="status-badge badge-success">Success</span></td>
+                            <td>{{ "%.2f" | format(status.last_retraining.duration_seconds) }}</td>
+                            <td>
+                                {% if status.last_retraining.accuracy_improvement %}
+                                <span class="{% if status.last_retraining.accuracy_improvement > 0 %}trend-positive{% else %}trend-negative{% endif %}">
+                                    {{ "%.2f" | format(status.last_retraining.accuracy_improvement * 100) }}%
+                                </span>
+                                {% else %}
+                                N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #9ca3af;">
+                                No retraining events yet
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Information Box -->
+        <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 15px; border-radius: 6px; margin: 20px 0;">
+            <h3 style="color: #1e40af; margin-bottom: 10px;">About Model Retraining</h3>
+            <ul style="color: #1e40af; margin: 0; padding-left: 20px;">
+                <li><strong>Automatic Monitoring:</strong> System continuously monitors model performance based on user responses</li>
+                <li><strong>Trigger Conditions:</strong> Retraining is triggered when accuracy drops below threshold or confidence gap exceeds limit</li>
+                <li><strong>Safety:</strong> Current model is backed up before retraining begins</li>
+                <li><strong>Manual Control:</strong> You can manually trigger retraining or adjust sensitivity settings</li>
+                <li><strong>History:</strong> All retraining events are logged with before/after metrics</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function loadRetrainingLog() {
+            // In a full implementation, this would fetch and display detailed history
+            alert('Full retraining history view coming soon');
+        }
+
+        // Auto-refresh metrics every 5 minutes
+        setInterval(function() {
+            location.reload();
+        }, 5 * 60 * 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ASD Prediction - Age-aware autism spectrum disorder screening tool">
+    <title>ASD Prediction - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="{{ url_for('home') }}" class="navbar-brand">🧠 ASD Prediction</a>
+            <ul class="navbar-nav">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('history') }}">History</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="navbar-logout">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="center-box">
+            <h1>Welcome to ASD Prediction</h1>
+            <p>A comprehensive, age-aware screening tool for autism spectrum disorder.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                <a href="{{ url_for('login') }}" class="btn btn-primary">Sign In</a>
+                <a href="{{ url_for('register') }}" class="btn btn-secondary">Create Account</a>
+            </div>
+        </div>
+
+        <div style="max-width: 900px; margin: 3rem auto;">
+            <h2 style="text-align: center; margin-bottom: 2rem;">How It Works</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div class="card">
+                    <h3>📝 Register</h3>
+                    <p>Create a secure account with your email and a strong password.</p>
+                </div>
+                <div class="card">
+                    <h3>👤 Provide Info</h3>
+                    <p>Tell us about the person being screened (age, gender, relation).</p>
+                </div>
+                <div class="card">
+                    <h3>❓ Answer Questions</h3>
+                    <p>Complete a tailored questionnaire based on age group.</p>
+                </div>
+                <div class="card">
+                    <h3>📊 Get Results</h3>
+                    <p>Receive an ASD prediction score and interpretation.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 ASD Prediction App. For screening purposes only. Always consult with healthcare professionals.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "check_interval_hours": 24,
+  "min_responses_for_retraining": 50,
+  "accuracy_threshold": 0.8,
+  "confidence_gap_threshold": 0.2,
+  "lookback_days": 14,
+  "auto_retrain_enabled": true,
+  "max_retrain_frequency_hours": 168
+}

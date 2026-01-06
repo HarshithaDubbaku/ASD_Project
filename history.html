@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Test History - ASD Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="{{ url_for('home') }}" class="navbar-brand">🧠 ASD Prediction</a>
+            <ul class="navbar-nav">
+                <li><a href="{{ url_for('user_info') }}" class="navbar-link">New Test</a></li>
+                <li><a href="{{ url_for('logout') }}" class="navbar-logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="center-box">
+            <h2>Your Test History</h2>
+            <p class="text-muted">View all your past ASD screening tests and results.</p>
+
+            {% if responses %}
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">{{ total_responses }}</div>
+                        <p class="stat-label">Total Tests</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">{{ avg_score }}%</div>
+                        <p class="stat-label">Average Score</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">{{ high_scores }}</div>
+                        <p class="stat-label">High Risk (≥70%)</p>
+                    </div>
+                </div>
+
+                <div class="responses-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Relation</th>
+                                <th>Score</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for response in responses %}
+                                <tr>
+                                    <td>{{ response.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td>{{ response.relation }}</td>
+                                    <td class="score-cell">{{ response.score }}%</td>
+                                    <td>
+                                        {% if response.score >= 70 %}
+                                            <span class="badge badge-danger">High</span>
+                                        {% elif response.score >= 30 %}
+                                            <span class="badge badge-warning">Moderate</span>
+                                        {% else %}
+                                            <span class="badge badge-success">Low</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{{ url_for('view_response', response_id=response.id) }}" class="btn btn-small btn-primary">View</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="info-box">
+                    <p>You haven't completed any tests yet.</p>
+                    <a href="{{ url_for('user_info') }}" class="btn btn-primary">Start New Test</a>
+                </div>
+            {% endif %}
+
+            <div class="form-actions">
+                <a href="{{ url_for('user_info') }}" class="btn btn-secondary">Take Another Test</a>
+                <a href="{{ url_for('export_data') }}" class="btn btn-info">📥 Export Data</a>
+                <a href="{{ url_for('export_analytics') }}" class="btn btn-info">📊 Export Analytics</a>
+                <a href="{{ url_for('export_features') }}" class="btn btn-info">🔍 Export Features</a>
+                <a href="{{ url_for('ab_test') }}" class="btn btn-info">📊 A/B Test Models</a>
+                <a href="{{ url_for('calibration') }}" class="btn btn-warning">🎯 Calibration</a>
+                <a href="{{ url_for('retraining_monitor') }}" class="btn btn-success">🔄 Retraining Monitor</a>
+                <a href="{{ url_for('home') }}" class="btn btn-primary">Go Home</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 ASD Prediction App. All rights reserved.</p>
+    </footer>
+</body>
+</html>

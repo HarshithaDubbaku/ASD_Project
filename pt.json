@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "home": "Início",
+    "new_test": "Novo Teste",
+    "history": "Histórico",
+    "logout": "Sair",
+    "language": "Idioma"
+  },
+  "auth": {
+    "login": "Entrar",
+    "register": "Registrar",
+    "username": "Nome de Usuário",
+    "password": "Senha",
+    "email": "Endereço de Email",
+    "login_button": "Entrar",
+    "register_button": "Criar Conta",
+    "already_member": "Já é membro?",
+    "new_member": "Novo na Previsão de TEA?"
+  },
+  "form": {
+    "age": "Idade",
+    "gender": "Gênero",
+    "ethnicity": "Etnia",
+    "relation": "Relação com o Sujeito",
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "jaundice": "Histórico de Icterícia",
+    "used_app": "Usou o aplicativo de triagem antes",
+    "next": "Próximo",
+    "previous": "Anterior"
+  },
+  "messages": {
+    "welcome": "Bem-vindo à Previsão de TEA",
+    "login_success": "Entrada bem-sucedida!",
+    "logout_success": "Você foi desconectado.",
+    "error": "Ocorreu um erro",
+    "no_data": "Nenhum dado disponível",
+    "loading": "Carregando...",
+    "success": "Sucesso"
+  },
+  "result": {
+    "score": "Pontuação de Risco",
+    "prediction": "Previsão",
+    "confidence": "Confiança",
+    "high_risk": "Alto Risco",
+    "low_risk": "Baixo Risco",
+    "moderate_risk": "Risco Moderado",
+    "probability": "Probabilidade",
+    "interpretation": "Interpretação",
+    "recommendation": "Recomendação"
+  },
+  "settings": {
+    "language": "Idioma",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "preferences": "Preferências",
+    "language_changed": "Idioma alterado com sucesso"
+  },
+  "home": {
+    "title": "Ferramenta de Previsão de TEA",
+    "subtitle": "Triagem para Transtorno do Espectro do Autismo",
+    "description": "Uma ferramenta abrangente para ajudar a identificar o possível transtorno do espectro do autismo",
+    "get_started": "Começar",
+    "features": "Recursos",
+    "about": "Sobre",
+    "contact": "Contato"
+  },
+  "questionnaire": {
+    "title": "Questionário de Triagem de TEA",
+    "instructions": "Por favor, responda todas as perguntas honestamente",
+    "question": "Pergunta",
+    "of": "de",
+    "yes": "Sim",
+    "no": "Não",
+    "next_question": "Próxima Pergunta",
+    "previous_question": "Pergunta Anterior",
+    "submit_test": "Enviar Teste"
+  },
+  "history": {
+    "title": "Seu Histórico de Testes",
+    "description": "Ver todos os seus testes de triagem de TEA anteriores",
+    "total_tests": "Testes Totais",
+    "average_score": "Pontuação Média",
+    "high_risk_count": "Testes de Alto Risco",
+    "date": "Data",
+    "score": "Pontuação",
+    "status": "Status",
+    "action": "Ação",
+    "view": "Visualizar",
+    "export_data": "Exportar Dados",
+    "export_analytics": "Exportar Análises",
+    "export_features": "Exportar Recursos"
+  },
+  "features": {
+    "confidence": "Intervalos de Confiança",
+    "shap": "Atribuição de Recursos",
+    "ab_test": "Teste A/B",
+    "calibration": "Calibração do Modelo",
+    "retraining": "Retreinamento Automático",
+    "export": "Exportação de Dados"
+  }
+}

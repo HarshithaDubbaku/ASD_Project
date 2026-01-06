@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "new_test": "Nueva Prueba",
+    "history": "Historial",
+    "logout": "Cerrar Sesión",
+    "language": "Idioma"
+  },
+  "auth": {
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "username": "Nombre de Usuario",
+    "password": "Contraseña",
+    "email": "Correo Electrónico",
+    "login_button": "Entrar",
+    "register_button": "Crear Cuenta",
+    "already_member": "¿Ya eres miembro?",
+    "new_member": "¿Nuevo en Predicción de TEA?"
+  },
+  "form": {
+    "age": "Edad",
+    "gender": "Género",
+    "ethnicity": "Etnia",
+    "relation": "Relación con el Sujeto",
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "jaundice": "Historial de Ictericia",
+    "used_app": "Usó la Aplicación de Cribado Antes",
+    "next": "Siguiente",
+    "previous": "Anterior"
+  },
+  "messages": {
+    "welcome": "Bienvenido a Predicción de TEA",
+    "login_success": "¡Inicio de sesión exitoso!",
+    "logout_success": "Ha cerrado sesión.",
+    "error": "Ocurrió un error",
+    "no_data": "No hay datos disponibles",
+    "loading": "Cargando...",
+    "success": "Éxito"
+  },
+  "result": {
+    "score": "Puntuación de Riesgo",
+    "prediction": "Predicción",
+    "confidence": "Confianza",
+    "high_risk": "Riesgo Alto",
+    "low_risk": "Riesgo Bajo",
+    "moderate_risk": "Riesgo Moderado",
+    "probability": "Probabilidad",
+    "interpretation": "Interpretación",
+    "recommendation": "Recomendación"
+  },
+  "settings": {
+    "language": "Idioma",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "preferences": "Preferencias",
+    "language_changed": "Idioma cambiado exitosamente"
+  },
+  "home": {
+    "title": "Herramienta de Predicción de TEA",
+    "subtitle": "Cribado para Trastorno del Espectro Autista",
+    "description": "Una herramienta integral para ayudar a identificar el trastorno del espectro autista",
+    "get_started": "Comenzar",
+    "features": "Características",
+    "about": "Acerca de",
+    "contact": "Contacto"
+  },
+  "questionnaire": {
+    "title": "Cuestionario de Cribado de TEA",
+    "instructions": "Por favor responda todas las preguntas honestamente",
+    "question": "Pregunta",
+    "of": "de",
+    "yes": "Sí",
+    "no": "No",
+    "next_question": "Siguiente Pregunta",
+    "previous_question": "Pregunta Anterior",
+    "submit_test": "Enviar Prueba"
+  },
+  "history": {
+    "title": "Su Historial de Pruebas",
+    "description": "Ver todas sus pruebas de cribado de TEA anteriores",
+    "total_tests": "Pruebas Totales",
+    "average_score": "Puntuación Promedio",
+    "high_risk_count": "Pruebas de Riesgo Alto",
+    "date": "Fecha",
+    "score": "Puntuación",
+    "status": "Estado",
+    "action": "Acción",
+    "view": "Ver",
+    "export_data": "Exportar Datos",
+    "export_analytics": "Exportar Análisis",
+    "export_features": "Exportar Características"
+  },
+  "features": {
+    "confidence": "Intervalos de Confianza",
+    "shap": "Atribución de Características",
+    "ab_test": "Prueba A/B",
+    "calibration": "Calibración del Modelo",
+    "retraining": "Reentrenamiento Automático",
+    "export": "Exportación de Datos"
+  }
+}

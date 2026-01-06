@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "new_test": "اختبار جديد",
+    "history": "السجل",
+    "logout": "تسجيل الخروج",
+    "language": "اللغة"
+  },
+  "auth": {
+    "login": "دخول",
+    "register": "تسجيل",
+    "username": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "email": "عنوان البريد الإلكتروني",
+    "login_button": "تسجيل الدخول",
+    "register_button": "إنشاء حساب",
+    "already_member": "هل أنت عضو بالفعل؟",
+    "new_member": "جديد في التنبؤ بـ ASD؟"
+  },
+  "form": {
+    "age": "العمر",
+    "gender": "النوع",
+    "ethnicity": "الأصل العرقي",
+    "relation": "العلاقة بالموضوع",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "jaundice": "تاريخ اليرقان",
+    "used_app": "استخدم تطبيق الفحص من قبل",
+    "next": "التالي",
+    "previous": "السابق"
+  },
+  "messages": {
+    "welcome": "أهلا بك في التنبؤ بـ ASD",
+    "login_success": "تم تسجيل الدخول بنجاح!",
+    "logout_success": "تم تسجيل الخروج.",
+    "error": "حدث خطأ",
+    "no_data": "لا توجد بيانات متاحة",
+    "loading": "جاري التحميل...",
+    "success": "النجاح"
+  },
+  "result": {
+    "score": "درجة الخطر",
+    "prediction": "التنبؤ",
+    "confidence": "الثقة",
+    "high_risk": "خطر مرتفع",
+    "low_risk": "خطر منخفض",
+    "moderate_risk": "خطر معتدل",
+    "probability": "الاحتمالية",
+    "interpretation": "التفسير",
+    "recommendation": "التوصية"
+  },
+  "settings": {
+    "language": "اللغة",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "preferences": "التفضيلات",
+    "language_changed": "تم تغيير اللغة بنجاح"
+  },
+  "home": {
+    "title": "أداة التنبؤ بـ ASD",
+    "subtitle": "الفحص لاضطراب طيف التوحد",
+    "description": "أداة شاملة للمساعدة في تحديد اضطراب طيف التوحد المحتمل",
+    "get_started": "ابدأ",
+    "features": "الميزات",
+    "about": "حول",
+    "contact": "اتصل بنا"
+  },
+  "questionnaire": {
+    "title": "استبيان فحص ASD",
+    "instructions": "يرجى الإجابة على جميع الأسئلة بصراحة",
+    "question": "سؤال",
+    "of": "من",
+    "yes": "نعم",
+    "no": "لا",
+    "next_question": "السؤال التالي",
+    "previous_question": "السؤال السابق",
+    "submit_test": "إرسال الاختبار"
+  },
+  "history": {
+    "title": "سجل الاختبارات الخاص بك",
+    "description": "عرض جميع اختبارات فحص ASD السابقة",
+    "total_tests": "إجمالي الاختبارات",
+    "average_score": "متوسط الدرجة",
+    "high_risk_count": "اختبارات الخطر المرتفع",
+    "date": "التاريخ",
+    "score": "الدرجة",
+    "status": "الحالة",
+    "action": "الإجراء",
+    "view": "عرض",
+    "export_data": "تصدير البيانات",
+    "export_analytics": "تصدير التحليلات",
+    "export_features": "تصدير الميزات"
+  },
+  "features": {
+    "confidence": "فترات الثقة",
+    "shap": "إسناد الميزات",
+    "ab_test": "اختبار A/B",
+    "calibration": "معايرة النموذج",
+    "retraining": "إعادة التدريب التلقائي",
+    "export": "تصدير البيانات"
+  }
+}

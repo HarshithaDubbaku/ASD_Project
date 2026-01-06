@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Calibration - ASD Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="{{ url_for('home') }}" class="navbar-brand">🧠 ASD Prediction</a>
+            <ul class="navbar-nav">
+                <li><a href="{{ url_for('history') }}" class="navbar-link">History</a></li>
+                <li><a href="{{ url_for('logout') }}" class="navbar-logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="center-box">
+            <h2>🎯 Model Calibration Analysis</h2>
+            <p class="subtitle">Assess and improve prediction probability reliability</p>
+
+            {% if error %}
+            <div class="alert alert-error">
+                <strong>Error:</strong> {{ error }}
+            </div>
+            {% endif %}
+
+            <form method="POST" class="form-group">
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">
+                    🔍 Analyze Model Calibration
+                </button>
+            </form>
+
+            {% if calibration_quality %}
+            <!-- Calibration Summary Section -->
+            <div class="calibration-summary">
+                <h3>📊 Calibration Summary</h3>
+                
+                <div class="quality-badge" data-quality="good">
+                    <div class="quality-score">
+                        <strong>{{ calibration_quality.method|upper }}</strong>
+                        <p>Best Performing Method</p>
+                    </div>
+                </div>
+
+                <div class="summary-metrics">
+                    <div class="metric-card">
+                        <strong>Expected Calibration Error</strong>
+                        <span class="metric-value">{{ calibration_quality.ece }}</span>
+                        <small>Lower is better (target: < 0.05)</small>
+                    </div>
+                    <div class="metric-card">
+                        <strong>Brier Score Improvement</strong>
+                        <span class="metric-value positive">{{ calibration_quality.brier_improvement }}</span>
+                        <small>Reduction in prediction error</small>
+                    </div>
+                    <div class="metric-card">
+                        <strong>Reliability Improvement</strong>
+                        <span class="metric-value">{{ "%.2%"|format(calibration_quality.reliability_improvement) }}</span>
+                        <small>Confidence-accuracy gap reduction</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accuracy Comparison -->
+            <div class="accuracy-comparison">
+                <h3>🎯 Accuracy Metrics</h3>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <h4>Before Calibration</h4>
+                        <p><strong>Accuracy:</strong> {{ "%.2%"|format(calibration_quality.raw_accuracy) }}</p>
+                        <p><strong>Confidence:</strong> {{ "%.2%"|format(calibration_quality.raw_confidence_gap) }}</p>
+                        <p class="metric-label">Confidence-Accuracy Gap</p>
+                    </div>
+                    <div class="arrow-divider">→</div>
+                    <div class="comparison-item highlight">
+                        <h4>After Calibration</h4>
+                        <p><strong>Accuracy:</strong> {{ "%.2%"|format(calibration_quality.calibrated_accuracy) }}</p>
+                        <p><strong>Confidence:</strong> {{ "%.2%"|format(calibration_quality.calibrated_confidence_gap) }}</p>
+                        <p class="metric-label">Confidence-Accuracy Gap (improved)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Results -->
+            <div class="calibration-details">
+                <h3>🔬 Detailed Analysis</h3>
+
+                <!-- Isotonic Regression -->
+                <div class="method-card">
+                    <h4>📈 Isotonic Regression (Non-Parametric)</h4>
+                    <div class="method-metrics">
+                        <div class="metric">
+                            <strong>Expected Calibration Error:</strong>
+                            <code>{{ calibration_results.isotonic.ece }}</code>
+                        </div>
+                        <div class="metric">
+                            <strong>Brier Score:</strong>
+                            <code>{{ calibration_results.isotonic.brier }}</code>
+                        </div>
+                        <div class="metric">
+                            <strong>Improvement:</strong>
+                            <code>{{ calibration_results.isotonic.improvement }}</code>
+                        </div>
+                        <div class="metric">
+                            <strong>Confidence Gap:</strong>
+                            <code>{{ calibration_results.isotonic.gap }}</code>
+                        </div>
+                    </div>
+                    <p class="method-description">
+                        ✓ Non-parametric approach using monotonic regression
+                        <br>✓ More flexible, adapts to data patterns
+                        <br>✓ Better for complex probability distributions
+                    </p>
+                </div>
+
+                <!-- Platt Scaling -->
+                <div class="method-card">
+                    <h4>📊 Platt Scaling (Parametric)</h4>
+                    <div class="method-metrics">
+                        <div class="metric">
+                            <strong>Expected Calibration Error:</strong>
+                            <code>{{ calibration_results.platt.ece }}</code>
+                        </div>
+                        <div class="metric">
+                            <strong>Brier Score:</strong>
+                            <code>{{ calibration_results.platt.brier }}</code>
+                        </div>
+                        <div class="metric">
+                            <strong>Improvement:</strong>
+                            <code>{{ calibration_results.platt.improvement }}</code>
+                        </div>
+                        <div class="metric">
+                            <strong>Confidence Gap:</strong>
+                            <code>{{ calibration_results.platt.gap }}</code>
+                        </div>
+                    </div>
+                    <p class="method-description">
+                        ✓ Parametric approach using logistic regression
+                        <br>✓ Simpler and more interpretable
+                        <br>✓ Faster computation
+                    </p>
+                </div>
+            </div>
+
+            <!-- Information Box -->
+            <div class="info-box" style="margin-top: 2rem;">
+                <h4>ℹ️ About Model Calibration</h4>
+                <p><strong>What is calibration?</strong> The process of adjusting model probability predictions so they accurately reflect true likelihood. A well-calibrated model outputs 60% probability for events that occur 60% of the time.</p>
+                
+                <p><strong>Why is it important?</strong></p>
+                <ul>
+                    <li>Improves confidence-accuracy alignment</li>
+                    <li>Makes probability predictions more reliable for decisions</li>
+                    <li>Reduces overconfidence in predictions</li>
+                    <li>Critical for clinical decision-making</li>
+                </ul>
+
+                <p><strong>Expected Calibration Error (ECE):</strong> Measures average difference between predicted and observed probabilities. Lower is better.</p>
+                
+                <p><strong>Brier Score:</strong> Mean squared error between predictions and outcomes. Calibration reduces this error.</p>
+
+                <p><strong>Methods Compared:</strong></p>
+                <ul>
+                    <li><strong>Isotonic Regression:</strong> Non-parametric, more flexible</li>
+                    <li><strong>Platt Scaling:</strong> Parametric, simpler, faster</li>
+                </ul>
+            </div>
+
+            <div class="form-actions">
+                <a href="{{ url_for('history') }}" class="btn btn-secondary">Back to History</a>
+                <a href="{{ url_for('home') }}" class="btn btn-primary">Go Home</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 ASD Prediction App. All rights reserved.</p>
+    </footer>
+</body>
+</html>

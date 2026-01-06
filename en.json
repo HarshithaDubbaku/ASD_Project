@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "home": "Home",
+    "new_test": "New Test",
+    "history": "History",
+    "logout": "Logout",
+    "language": "Language"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "username": "Username",
+    "password": "Password",
+    "email": "Email Address",
+    "login_button": "Sign In",
+    "register_button": "Create Account",
+    "already_member": "Already a member?",
+    "new_member": "New to ASD Prediction?"
+  },
+  "form": {
+    "age": "Age",
+    "gender": "Gender",
+    "ethnicity": "Ethnicity",
+    "relation": "Relation to Subject",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "jaundice": "Jaundice History",
+    "used_app": "Used Screening App Before",
+    "next": "Next",
+    "previous": "Previous"
+  },
+  "messages": {
+    "welcome": "Welcome to ASD Prediction",
+    "login_success": "Login successful!",
+    "logout_success": "You have been logged out.",
+    "error": "An error occurred",
+    "no_data": "No data available",
+    "loading": "Loading...",
+    "success": "Success"
+  },
+  "result": {
+    "score": "Risk Score",
+    "prediction": "Prediction",
+    "confidence": "Confidence",
+    "high_risk": "High Risk",
+    "low_risk": "Low Risk",
+    "moderate_risk": "Moderate Risk",
+    "probability": "Probability",
+    "interpretation": "Interpretation",
+    "recommendation": "Recommendation"
+  },
+  "settings": {
+    "language": "Language",
+    "save": "Save",
+    "cancel": "Cancel",
+    "preferences": "Preferences",
+    "language_changed": "Language changed successfully"
+  },
+  "home": {
+    "title": "ASD Prediction Tool",
+    "subtitle": "Screen for Autism Spectrum Disorder",
+    "description": "A comprehensive tool to help identify potential autism spectrum disorder",
+    "get_started": "Get Started",
+    "features": "Features",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "questionnaire": {
+    "title": "ASD Screening Questionnaire",
+    "instructions": "Please answer all questions honestly",
+    "question": "Question",
+    "of": "of",
+    "yes": "Yes",
+    "no": "No",
+    "next_question": "Next Question",
+    "previous_question": "Previous Question",
+    "submit_test": "Submit Test"
+  },
+  "history": {
+    "title": "Your Test History",
+    "description": "View all your past ASD screening tests",
+    "total_tests": "Total Tests",
+    "average_score": "Average Score",
+    "high_risk_count": "High Risk Tests",
+    "date": "Date",
+    "score": "Score",
+    "status": "Status",
+    "action": "Action",
+    "view": "View",
+    "export_data": "Export Data",
+    "export_analytics": "Export Analytics",
+    "export_features": "Export Features"
+  },
+  "features": {
+    "confidence": "Confidence Intervals",
+    "shap": "Feature Attribution",
+    "ab_test": "A/B Testing",
+    "calibration": "Model Calibration",
+    "retraining": "Auto Retraining",
+    "export": "Data Export"
+  }
+}
